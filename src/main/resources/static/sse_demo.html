@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SSE Demo</title>
+</head>
+<body>
+
+<script>
+  var source = new EventSource('http://localhost:8080/sse');
+
+  source.addEventListener('open', function(event) {
+    console.log('连接已经打开。');
+  });
+
+  source.addEventListener('message', function(event) {
+    console.log('接收到消息：' + event.data);
+  });
+
+  source.addEventListener('error', function(event) {
+    if (event.eventPhase == EventSource.CLOSED) {
+      console.log('连接已经关闭。');
+    } else {
+      console.log('发生错误。');
+    }
+  });
+</script>
+
+</body>
+</html>
