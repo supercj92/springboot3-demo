@@ -1,7 +1,10 @@
 package com.example.demo;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
 @SpringBootApplication
+//@ComponentScan(basePackages = {"org.springframework.session.config.annotation.web.http"})
 public class DemoApplication {
 
 	public static void main(String[] args) {
@@ -19,12 +23,15 @@ public class DemoApplication {
 	@GetMapping("/hello")
 	@ResponseBody
 	public String hello() {
+		System.out.println("hello1234");
 		return "hello";
 	}
 
 	@GetMapping("/world")
 	@ResponseBody
-	public String world() {
+	public String world(HttpSession httpSession, HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession();
+		session.setAttribute("key123", "value123");
 		return "world";
 	}
 
